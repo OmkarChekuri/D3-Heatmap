@@ -1,31 +1,18 @@
-<!-- Code from d3-graph-gallery.com -->
 <!DOCTYPE html>
 <meta charset="utf-8">
 <html>
   <head>
     <style>
-      rect.bordered {
-        stroke: #E6E6E6;
-        stroke-width:2px;   
+      #my_dataviz{
+        background-color: whitesmoke;
       }
 
-      text.mono {
-        font-size: 9pt;
-        font-family: Consolas, courier;
-        fill: #aaa;
-      }
-
-      text.axis-workweek {
-        fill: #000;
-      }
-
-      text.axis-worktime {
-        fill: #000;
+      
       }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
   </head>
-  <body>
+  <body class="body">
     <H1> Heat Map for Age of Female Athletes </H1>   
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
@@ -35,18 +22,20 @@
 
 // set the dimensions and margins of the graph
 var margin = {top: 30, right: 30, bottom: 100, left: 150},
-  width = 800 - margin.left - margin.right,
+  width = 700 - margin.left - margin.right,
   height = 800 - margin.top - margin.bottom,
-  buckets = 9,
-  colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"];
+  colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"]
+  buckets = colors.length
+  const legendElementWidth = width;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
-.append("svg")
+  .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
-.append("g")
+  .append("g")
   .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+  
   
  // ["1900", "1904", "1906", "1908", "1912", "1920", "1924", "1928", "1932", "1936", "1948", "1952","1956",
   //          "1960","1964","1968","1972","1976","1980","1984","1988","1992","1994","1996","1998","2000",
@@ -104,6 +93,8 @@ d3.csv("https://raw.githubusercontent.com/OmkarChekuri/D3/master/NewFemaleData.c
       .attr("width", x.bandwidth() )
       .attr("height", y.bandwidth() )
       .style("fill", function(d) { return myColor(d.value)} )
+      .append("title")
+      .text((d) => "Age: "+ d.value+ "\nYear: "+ d.year + "\nEvent: "+ d.event)
 
 })
 
